@@ -1,0 +1,35 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="{% static 'media/P6.png '%}" style="width:130px; height:40px; object-fit: contain;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-house"></i>Home |</a>
+        {% if request.user.is_authenticated %}
+        <a class="nav-link" aria-current="page" href="#"><i class="fa-regular fa-user"></i>{{ request.user }}</a>
+        <a class="nav-link" aria-current="page" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout |</a>
+        {% else %}
+
+        <a class="nav-link"  href="{% url 'login' %}"><i class="fa-solid fa-user-clock"></i>Login |</a>
+        <a class="nav-link"  href="{% url 'register' %}"><i class="fa-solid fa-user-lock"></i>Register |</a>
+        {% endif %}
+        <a class="nav-link"  href="{% url 'collection' %}"><i class="fa-solid fa-layer-group"></i>Collection |</a>
+        <a class="nav-link"  href="#"><i class="fa-solid fa-box-open"></i>Cart |</a>
+
+
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>

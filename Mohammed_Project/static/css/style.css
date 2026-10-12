@@ -1,0 +1,146 @@
+*{
+    font-family:"inter",sans-serif;
+
+}
+
+.carousel-item {
+    height: 60vh;
+    background: #000;
+}
+
+.carousel-item img {
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center !important;
+    
+}
+/* Products index css styles */
+
+/* product card section style*/
+/* Card container height & layout normalize panna */
+.product-card{
+    display:flex;
+    flex-direction:column;
+    height:100% !important;
+    border:1px solid #eee;
+    background:#fff;
+    overflow:hidden;
+    transition:transform 0.2s ease-in-out,box-shadow 0.2s ease-in-out;
+
+}
+.product-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.1) !important;
+
+}
+.img-container{
+    height:220px !important;
+    width:100% !important;
+    display:flex;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:hidden !important;
+    background-color:#fafafa;
+    padding:12px;
+}
+.img-container img,
+.c-img{
+    max-width:100% !important;
+    max-height:100% !important;
+    width:auto !important;
+    height:auto !important;
+    object-fit:contain !important;
+    display:block;
+
+}
+.card-body{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    flex-grow:1;
+    padding:1rem !important;
+}
+.product-title{
+    font-size:1.05rem;
+    font-weight:600;
+    color:#212529;
+    margin-bottom:0.5rem;
+    text-transform:capitalize;
+}
+.old-price{
+    color:#dc3545;
+    font-size:0.9rem;
+    font-weight:600;
+    font-size:0.875rem;
+    padding:0.4em 0.75em !important;
+    border-radius:4px;
+
+}
+
+/* footer div*/
+/* Footer */
+/* Footer */
+.footer-description {
+    color: #adb5bd;
+    line-height: 1.7;
+}
+
+footer h6 {
+    color: #ffffff;
+}
+
+footer a {
+    color: #abadaf !important;
+    transition: all 0.3s ease;
+    text-decoration:none;
+}
+
+footer a:hover {
+    color: #ff9800 !important;
+}
+
+/* Social icons */
+footer .fa-brands {
+    font-size: 18px;
+    transition: 0.3s ease;
+}
+
+footer .fa-brands:hover {
+    color: #ff9800;
+    transform: translateY(-3px);
+}
+
+/* Contact icons */
+footer .fa {
+    margin-right: 6px;
+    color: #ff9800;
+}
+
+/* Footer bottom */
+.footer-bottom {
+    border-top: 1px solid #343a40;
+}
+
+/* register page some design */
+#r-h1{
+    color:#373D20;
+    font-size:xx-large;
+    font-weight:500;
+    text-align:center;
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
