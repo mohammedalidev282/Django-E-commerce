@@ -138,3 +138,6 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+#razerpay payment options
+RAZORPAY_KEY_ID="rzp_test_TnNLQEglR61PM6"
+RAZORPAY_KEY_SECRET="1coJbyhYgbuxHLy3LsUl42Nx"

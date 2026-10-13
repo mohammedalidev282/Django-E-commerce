@@ -48,12 +48,28 @@
                             </tr>
                         </tfoot>
                     </table>
+                    
                 </div>
             </div>
 
         </div>
+        <div class="payment-section mt-4 p-4">
+            <div>
+                <h4 class="mb-2">Secure Checkout</h4>
+                <p class="text-muted mb-0">
+                     Review your cart and continue to secure payment.
+                </p>
+            </div>
+            <a href="{% url 'payment' %}" class="pay-btn">
+                <i class="fa-solid fa-lock me-2"></i>
+                 Pay Now with Razorpay
+                 <i class="fa-solid fa-arrow-right ms-2"></i>
+            </a>
+
+        </div>
     </div>
 </section>
+
 <Script>
 
    

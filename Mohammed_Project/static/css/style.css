@@ -132,9 +132,52 @@ footer .fa {
 
 }
 
+/* payments style add */
+.payment-section{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    background:#ffffff;
+    border:1px solid  #e5e7eb;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0, 0, 0, 0.05) ;
+}
+.payment-section h4{
+    color: #212529;
+    font-weight: 700;
+}
+.pay-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content: center;
+    padding:13px 22px;
+    background:#198754;
+    color:#ffffff;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition: all 0.25s ease;
+}
 
+.pay-btn:hover{
+    background: #146c43;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(25, 135, 84, 0.25);
+}
 
+@media (max-width: 576px) {
+    .payment-section {
+        align-items: stretch;
+        flex-direction: column;
+    }
 
+    .pay-btn {
+        width: 100%;
+    }
+}
 
 
 

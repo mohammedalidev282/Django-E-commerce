@@ -5,6 +5,13 @@ import json
 from django.http import JsonResponse
 from . form import CustomUserForm
 from django.contrib.auth import authenticate,login,logout
+#payment integration option
+import razorpay
+from decimal import Decimal
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
 
 
 # Create your views here.
@@ -114,10 +121,61 @@ def add_To_Cart(request):
         'status': 'Invalid Access'
     })
 
+
+#payment cart page
+def get_razorpay_client():
+    return razorpay.Client(
+        auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET
+        )
+    )
+
+@login_required(login_url='login')
 def cart_page(request):
     if request.user.is_authenticated:
         cart=Cart.objects.filter(user=request.user)
-        return render(request,"Cart.html",{'cart':cart})
+        total=sum(
+            (item.total_cost for item in cart),
+            Decimal('0.00')
+        )
+        return render(request,"Cart.html",
+        {
+        'cart':cart,
+        'total':total
+        })
+    else:
+        return redirect('login')   
+
+
+def payment_page(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    cart = Cart.objects.filter(user=request.user)
+
+    total = sum(
+        (item.total_cost for item in cart),
+        Decimal('0.00')
+    )
+
+    if not cart.exists() or total <= 0:
+        messages.error(request, "Your cart is empty!")
+        return redirect('cart')
+
+    client = get_razorpay_client()
+
+    order = client.order.create({
+        'amount': int(total * 100),
+        'currency': 'INR',
+        'receipt': f'cart_{request.user.id}'
+    })
+
+    return render(request, 'payment.html', {
+        'order': order,
+        'total': total,
+        'razorpay_key': settings.RAZORPAY_KEY_ID,
+    })
 #remove cart view function
 def remove_cart(request,cid):
     cart_items=Cart.objects.get(id=cid)
@@ -154,3 +212,5 @@ def remove_fav(request,fid):
     fav_items=Favorates.objects.get(id=fid)
     fav_items.delete()
     return redirect("/fav_page")
+
+#Payment integrations
