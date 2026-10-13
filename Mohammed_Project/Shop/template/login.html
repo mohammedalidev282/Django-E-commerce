@@ -14,9 +14,9 @@ Register | ShopKart
 
             </div>
         </div>
-        <section class="mt-3">
+        <section class="mt-3 cart">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-6">
                         <form method="post" action="">
                             {% csrf_token %}
@@ -37,7 +37,12 @@ Register | ShopKart
                             <div class="d-grid gap-2 mt-4">
                                 <button type="submit" class="btn btn-info btn-block">Login</button>
                             </div>
-                            
+                             <div class="text-center mt-3">
+                                <span class="text-muted">Are You New User?
+                                    <a href="{% url 'register' %}" class="text-decoration-none fw-bold ms-1">Register</a>
+                                </span>
+                                
+                            </div>
                         </form>
                         
                     </div>
