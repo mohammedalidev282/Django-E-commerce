@@ -1,0 +1,50 @@
+{% extends 'layouts/main.html' %} 
+
+{% block content %}
+<section class="bg-light py-4" style="margin-top:60px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Favorates Items</h4>
+                <hr style="border-color: #b8bfc2">
+            </div>
+            
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle bg-white shadow-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 100px;">Image</th>
+                                <th>Product Name</th>
+                                <th class="text-end">Unit</th>
+                                <th class="text-center" style="width: 100px;">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for items in fav %}
+                            <tr>
+                                <td class="text-center">
+                                    <img src="{{ items.product.Pr_image.url }}" alt="{{ items.product.name }}" style="height: 70px; object-fit: contain;">
+                                </td>
+                                <td class="fw-semibold">{{ items.product.name }}</td>
+                                <td class="text-end">&#8377;{{ items.product.newPrice }}</td>
+                                
+                                
+                                <td class="text-center">
+                                    <a href="{% url 'remove_fav' items.id %}" onclick="return confirm('Are You Sure to Remove')" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-trash me-1"></i>Remove
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

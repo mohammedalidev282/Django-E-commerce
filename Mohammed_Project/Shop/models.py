@@ -42,3 +42,13 @@ class  Cart(models.Model):
     pr_qty=models.IntegerField(null=False,blank=False)
     created_at=models.DateTimeField(auto_now_add=True)
 
+    @property
+    def total_cost(self):
+        return self.pr_qty * self.product. newPrice
+
+
+class Favorates(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product, on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+

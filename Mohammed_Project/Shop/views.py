@@ -81,7 +81,6 @@ def product_details(request,cname,pname):
         return redirect('collection')           
 
 
-
 def add_To_Cart(request):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         if request.user.is_authenticated:
@@ -89,17 +88,23 @@ def add_To_Cart(request):
 
             pr_qt = data.get('product_qt')
             pr_id = data.get('pid')
-            product_status=Product.objects.get(id=pr_id)
-            if product_status:
-                if Cart.objects.filter(user=request.user.id,product_id=pr_id):
-                    return JsonResponse({'status':'Product Alredy in Cart'},status=200)
-                else:
-                    if product_status.quantity>=pr_qt:
-                        Cart.objects.create(user=request.user.id,product_id=pr_id,product_qty=pr_qt)    
-                        return JsonResponse({'status':'Product Add to cart'},status=200)
-                    else:
-                        return JsonResponse({'status':'Stock not Availabel'},status=200)    
             
+            product_status = Product.objects.get(id=pr_id)
+            if product_status:
+                # You can keep request.user.id in filter, or use request.user
+                if Cart.objects.filter(user=request.user, product_id=pr_id):
+                    return JsonResponse({'status': 'Product Alredy in Cart'}, status=200)
+                else:
+                    if product_status.quantity >= int(pr_qt): # Make sure quantity is compared as an integer if needed
+                        # FIX HERE: use request.user instead of request.user.id
+                        Cart.objects.create(
+                            user=request.user, 
+                            product_id=pr_id, 
+                            pr_qty=pr_qt
+                        )    
+                        return JsonResponse({'status': 'Product Add to cart'}, status=200)
+                    else:
+                        return JsonResponse({'status': 'Stock not Availabel'}, status=200)    
 
         return JsonResponse({
             'status': 'Login To Add To Cart'
@@ -107,4 +112,45 @@ def add_To_Cart(request):
 
     return JsonResponse({
         'status': 'Invalid Access'
-    })    
+    })
+
+def cart_page(request):
+    if request.user.is_authenticated:
+        cart=Cart.objects.filter(user=request.user)
+        return render(request,"Cart.html",{'cart':cart})
+#remove cart view function
+def remove_cart(request,cid):
+    cart_items=Cart.objects.get(id=cid)
+    cart_items.delete()
+    return redirect("/cart")
+#favorates views functions
+
+def favorate_items(request):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        if request.user.is_authenticated:
+            data = json.loads(request.body)
+            pr_id = data.get('pid')
+            product_status = Product.objects.get(id=pr_id) 
+            if product_status:
+                if Favorates.objects.filter(user=request.user, product_id=pr_id):
+                    return JsonResponse({'status': 'Product Alredy in Favorate'}, status=200)
+                else:
+                    Favorates.objects.create(user=request.user, product_id=pr_id) 
+                    return JsonResponse({'status': 'Product Favorate to Add'})
+        else:
+            return JsonResponse({'status': 'Login To Add To Cart'})
+    else:
+        return JsonResponse({'status': 'Invalid Access'})
+
+#fav page view functio 
+def favorate_page(request):
+    if request.user.is_authenticated:  # <-- Remove parentheses () here
+        fav = Favorates.objects.filter(user=request.user)
+        return render(request, "Fav.html", {'fav': fav})
+    else:
+        return redirect("/")
+#remove fav view function
+def remove_fav(request,fid):
+    fav_items=Favorates.objects.get(id=fid)
+    fav_items.delete()
+    return redirect("/fav_page")

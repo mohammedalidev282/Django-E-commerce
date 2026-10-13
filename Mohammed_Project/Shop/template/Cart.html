@@ -1,0 +1,77 @@
+{% extends 'layouts/main.html' %} 
+
+{% block content %}
+
+<section class="bg-light py-4" style="margin-top:60px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Cart Items</h4>
+                <hr style="border-color: #b8bfc2">
+            </div>
+            
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle bg-white shadow-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 100px;">Image</th>
+                                <th>Product Name</th>
+                                <th class="text-end">Unit</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-end">Amount</th>
+                                <th class="text-center" style="width: 100px;">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for items in cart %}
+                            <tr>
+                                <td class="text-center">
+                                    <img src="{{ items.product.Pr_image.url }}" alt="{{ items.product.name }}" style="height: 70px; object-fit: contain;">
+                                </td>
+                                <td class="fw-semibold">{{ items.product.name }}</td>
+                                <td class="text-end">&#8377;{{ items.product.newPrice }}</td>
+                                <td class="text-center">{{ items.pr_qty }}</td>
+                                <td class="text-end fw-bold amt">&#8377;{{ items.total_cost }}</td>
+                                <td class="text-center">
+                                    <a href="{% url 'remove_cart' items.id %}" onclick="return confirm('Are You Sure to Remove')" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-trash me-1"></i>Remove
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-end fw-bold">Total Amount:</td>
+                                <td colspan="2" class="fw-bold" id="net">&#8377;<span>0</span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<Script>
+
+   
+    const nodes = document.querySelectorAll('.amt');
+    const arr = Array.from(nodes);
+    const res = arr.reduce((acc, curr) => {
+        // Remove currency symbols and non-numeric characters before converting
+        const value = parseFloat(curr.textContent.replace(/[^0-9.-]+/g, "")) || 0;
+        return acc + value;
+    }, 0);
+    
+    document.getElementById("net").innerHTML = "Rs " + res;
+
+    
+
+
+</Script>  
+
+
+
+{% endblock %}

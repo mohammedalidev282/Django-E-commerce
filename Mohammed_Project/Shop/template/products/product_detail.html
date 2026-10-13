@@ -50,12 +50,12 @@ Products|ShopKart
                             <button class="input-group-text bg-success text-light" id="btnPlus"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </p>
-                    <button class="btn btn-primary" id="btcart"><i class="fa-solid fa-basket-shopping pl-1"></i>Add to Cart</button>
+                    <button class="btn btn-primary" id="btcart"><i class="fa-solid fa-cart-shopping"></i>Add to Cart</button>
                     {% else %}
                     <button class="btn btn-secondary"><i class="fa-solid fa-minus"></i>Out Of Stock</button>
 
                     {% endif %}
-                    <button class="btn btn-danger"><i class="fa-solid fa-heart"></i></button>
+                    <button class="btn btn-danger" id="btnfav"><i class="fa-solid fa-heart"></i></button>
                 </div>
 
             </div>
@@ -69,7 +69,8 @@ Products|ShopKart
         const btnminus=document.getElementById("btnMinus");
         const textbox=document.getElementById("txtQty");
         const pr_id=document.getElementById("pid");
-        const btncart=document.getElementById("btcart")
+        const btncart=document.getElementById("btcart");
+        const btnfav=document.getElementById("btnfav");
 
        btnplus.addEventListener("click",function(){
         let qty=parseInt(textbox.value,10);
@@ -117,7 +118,7 @@ Products|ShopKart
                 return response.json();
             })
             .then(data=>{
-                console.log(data)
+                alert(data['status'])
             });
             
         }else{
@@ -125,6 +126,33 @@ Products|ShopKart
 
         }
     })
+    btnfav.addEventListener("click",function(){
+        
+            let postObj={
+                pid:pr_id.value,
+            }
+            
+            fetch("/fav",{
+                method:'POST',
+                credentials:"same-origin",
+                headers:{
+                    'Accept':'application/json',
+                    'X-Requested-With':'XMLHttpRequest',
+                    'X-CSRFToken':'{{csrf_token}}'
+                },
+                body:JSON.stringify(postObj)
+                
+            })
+            .then(response=>{
+                return response.json();
+            })
+            .then(data=>{
+                alert(data['status'])
+            });
+            
+       
+    })
+
         
 
     });
